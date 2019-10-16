@@ -1,2 +1,9 @@
-# JSStuff
-Posting basic and sometimes useful JavaScript stuff!
+# JS FizzBuzz
+
+Solution to the FizzBuzz problem in JavaScript
+
+	#Statement
+	Write a program that prints the numbers from 1 to 100
+	and for multiples of '3' print "Fizz" instead of the
+	number and for the multiples of '5' print "Buzz".
+
