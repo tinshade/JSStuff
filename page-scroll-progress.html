@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navigation Scroll Progress Bar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+
+    *{
+      margin: 0;
+      padding: 0;
+      font-family: arial, monospace;
+    }
+    body{
+      background-color: #0b0b0b;
+    }
+    #main{
+      max-width: 100%;
+      height: auto;
+    }
+    #header{
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 10;
+    }
+    #navbar ul{
+      list-style: none;
+      background-color: #04090d;
+      color: white;
+
+
+      display: flex;
+      justify-content: flex-end;
+
+    }
+    #navbar ul li{
+
+      padding: 1em;
+    }
+    #navbar ul li:hover{
+      cursor: pointer;
+      text-decoration: underline white 2px;
+    }
+    #navbar .nav-link{
+      text-decoration: none;
+      color: white;
+    }
+
+    #welcome-section{
+      margin: auto;
+      height: 100vh;
+      position: relative;
+      background-color: #1b1e20;
+    }
+    #welcome-section #welcome-view, #collaboration #collaboration-view{
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+      z-index: 9;
+    }
+    #welcome-section #welcome-view h1, #collaboration-view h1{
+      color: white;
+      font-size: 4em;
+    }
+    #welcome-section #welcome-view p, #collaboration-view p{
+      text-align: center;
+      font-style: italic;
+      font-size: 2em;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    #projects{
+      padding: 10em 0em;
+      background-color: #1A4259;
+      text-align: center;
+    }
+
+    #projects-grid{
+      display: grid;
+      margin: 0em 5em;
+      
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      column-gap: 1em;
+      row-gap: 2em;
+
+    }
+    #projects h1{
+      margin-bottom: 1em;
+      font-size: 2em;
+      color: white;
+    }
+    #projects-grid .project-tile .project-tile-view{
+      display: inline-block;
+      background-color: #1e303b;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: all 0.25s ease-in-out;
+      
+      max-width: 100%;
+    }
+    #projects-grid .project-tile .project-tile-view:hover{
+      cursor:pointer;
+      transform: scale(0.95);
+      box-shadow: 0 4px 16px 0 rgba(0,0,0,0.5);
+    }
+    #projects-grid .project-tile .project-icon{
+      
+      display: inline-block;
+    }
+    #projects-grid .project-tile .project-icon img{
+
+      max-width: 100%;
+      height: auto;
+    
+    }
+
+    #projects-grid .project-tile .project-description p{
+      padding: 1em;
+      font-size: 1.5em;
+    }
+    #projects-grid .project-tile .project-description p a{
+      color: white;
+      text-decoration: none;
+    }
+
+    #collaboration{
+      margin: auto;
+      height: 100vh;
+      position: relative;
+      background-color: #15354A;
+    }
+    #collaboration-links{
+      margin: 2em 0em ;
+    }
+    #collaboration-links ul{
+      list-style: none;
+      display: flex;
+
+      justify-content: space-evenly;
+    }
+    #collaboration-links a{
+      color: white;
+      text-decoration: none;
+      font-size: 1.5em;
+      color: white;
+    }
+    #collaboration-links div{
+      transition: all 0.125s ease-in-out;
+    }
+    #collaboration-links div:hover{
+      transform: translateY(10px);
+    }
+
+
+    #footer{
+      background-color: #0B1C2C;
+      display: flex;
+      justify-content: space-evenly;
+    }
+    #footer div{
+      margin: 1em;
+    }
+    #footer div p{
+      color: white;
+    }
+
+
+    @media (max-width: 575.98px){
+      #projects-grid{
+          margin: 0em 2em;
+      
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat (4, 1fr);
+          column-gap: 1em;
+          row-gap: 2em;
+          max-width: 100%;
+      }
+      #projects-grid .project-tile{
+      
+      }
+    }
+
+    /* Edit this section for the navigation progress bar */
+    #navbar{
+        position: relative;
+    }
+    .nav-progressbar{
+        height: 5px;
+        background-image: linear-gradient(to right, rgb(141, 146, 146), #424749);
+        width: 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<header id="header">
+  <nav id="navbar">
+     <ul>
+       <li><a class="nav-link" href="#welcome-section">About</a></li>
+       <li><a class="nav-link" href="#projects">Work</a></li>
+       <li><a class="nav-link" href="#collaboration">Contact</a></li>
+    </ul>
+
+    <div class="nav-progressbar js-nav-progressbar"></div>
+  </nav>
+</header>
+<main id="main">
+
+  <!-- Welcome -->
+  <section id="welcome-section">
+
+    <div id="welcome-view">
+      <h1>Hey I am First Name, Last Name</h1>
+      <p>a web developer</p>
+    </div>
+
+  </section>
+  
+  
+  <section id="projects">
+    <h1>These are some of my projects</h1>
+    
+    <div id="projects-grid">
+      
+      <div class="project-tile">
+        <div class="project-tile-view">
+          <div class="project-icon">
+          
+          </div>
+
+          <div class="project-description">
+            <p>
+              <a href="" target="_blank">
+              Michael Jordan Tribute Page
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      <div class="project-tile">
+        <div class="project-tile-view">
+          <div class="project-icon">
+            
+          </div>
+
+          <div class="project-description">
+            <p>
+              <a href="" target="_blank">
+              General Survey Form
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+      
+            
+      <div class="project-tile">
+        <div class="project-tile-view">
+          <div class="project-icon">
+           
+          </div>
+
+          <div class="project-description">
+            <p>
+              <a href="" target="_blank">
+              Product Landing Page
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+                  
+      <div class="project-tile">
+        <div class="project-tile-view">
+          <div class="project-icon">
+           
+          </div>
+
+          <div class="project-description">
+            <p>
+              <a href="" target="_blank">
+              Technical Document Page
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+  
+  
+  <section id="collaboration">
+    <div id="collaboration-view">
+      <h1>Let's Work Together...</h1>
+      <p>How do you take your coffee</p>
+      
+      <div id="collaboration-links">
+        <ul>
+          <li>
+            <div>
+              <a id="profile-link" target="_blank" href="https://github.com/yourgithub">
+                <i class="fa fa-github" aria-hidden="true"></i> GitHub
+              </a>
+            </div>
+          </li>
+          
+          <li>
+            <div>
+              <a href="https://www.linkedin.com/" target="_blank">
+                <i class="fa fa-linkedin-square" aria-hidden="true"></i> LinkedIn
+              </a>
+            </div>
+          </li>
+          
+          <li>
+            <div>
+              <a href="mailto:youremail@gmail.com" target="_blank">
+                <i class="fa fa-envelope" aria-hidden="true"></i> Email
+              </a>
+            </div>
+          </li>
+          
+         
+        </ul>
+      </div>
+    </div>
+    
+ 
+  </section>
+  
+  
+  <footer id="footer">
+    <div>
+      <p>
+        **This is just a fake portfolio. All the projects and contact details given are not real.
+      </p>
+    </div>
+    <div>
+      <p>
+      © Created for Your Name
+      </p>
+    </div>
+  </footer>
+  
+
+</main>
+
+
+<!-- javascript scripts -->
+<script>
+
+/*   
+Tutorial Description
+
+This handy horizontal progress bar animates as you scroll up or down the page. It's also responsive so it takes into account if you resize your browser.
+
+*/
+
+    const navProgressBar = document.querySelector(".js-nav-progressbar");
+    let heightLimit;
+
+    // Scroll event listener
+    window.addEventListener("scroll", event => {
+
+        const curPos = window.scrollY;  
+        const curPercentage = Math.round( curPos / heightLimit * 100) ;
+        
+        navProgressBar.style.width  = curPercentage + "%";
+    })
+
+    // Resize event listener
+    window.addEventListener("resize", event => {
+        const body = document.body;
+        const html = document.documentElement;
+        heightLimit =  body.scrollHeight - window.innerHeight;
+    })
+
+    // Trigger resize event on page laod
+    window.dispatchEvent(new Event("resize"));
+</script>
+</body>
+</html><a target='_blank' href='www.javascriptfreecode.com' style='font-size: 8pt; text-decoration: none'>JavaScript Best Codes</a>                                                
+                                            
